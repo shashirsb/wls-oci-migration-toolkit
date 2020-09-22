@@ -1,0 +1,121 @@
+domainInfo:
+    AdminUserName: '--FIX ME--'
+    AdminPassword: '--FIX ME--'
+topology:
+    Name: airflow
+    DomainVersion: 12.2.1.4.0
+    NMProperties:
+        JavaHome: /home/opc/installer/jdk1.8.0_221
+        PropertiesVersion: 12.2.1.4.0
+        weblogic.StartScriptName: startManagedWebLogic.sh
+    Cluster:
+        Cluster1:
+        Cluster2:
+    Server:
+        AdminServer:
+        Managed1:
+            ListenPort: 8001
+            Machine: Machine1
+            Cluster: Cluster1
+            JTAMigratableTarget:
+                Cluster: Cluster1
+                UserPreferredServer: Managed1
+            WebServer:
+                WebServerLog:
+                    NumberOfFilesLimited: false
+        Managed2:
+            ListenPort: 8002
+            Machine: Machine1
+            Cluster: Cluster1
+            JTAMigratableTarget:
+                Cluster: Cluster1
+                UserPreferredServer: Managed2
+            WebServer:
+                WebServerLog:
+                    NumberOfFilesLimited: false
+        Managed3:
+            ListenPort: 8003
+            Machine: Machine1
+            Cluster: Cluster2
+            JTAMigratableTarget:
+                Cluster: Cluster2
+                UserPreferredServer: Managed3
+            WebServer:
+                WebServerLog:
+                    NumberOfFilesLimited: false
+        Managed4:
+            ListenPort: 8004
+            Machine: Machine1
+            Cluster: Cluster2
+            JTAMigratableTarget:
+                Cluster: Cluster2
+                UserPreferredServer: Managed4
+            WebServer:
+                WebServerLog:
+                    NumberOfFilesLimited: false
+    MigratableTarget:
+        Managed2 (migratable):
+            Cluster: Cluster1
+            UserPreferredServer: Managed2
+            Notes: This is a system generated default migratable target for a server. Do not delete manually.
+        Managed3 (migratable):
+            Cluster: Cluster2
+            UserPreferredServer: Managed3
+            Notes: This is a system generated default migratable target for a server. Do not delete manually.
+        Managed4 (migratable):
+            Cluster: Cluster2
+            UserPreferredServer: Managed4
+            Notes: This is a system generated default migratable target for a server. Do not delete manually.
+        Managed1 (migratable):
+            Cluster: Cluster1
+            UserPreferredServer: Managed1
+            Notes: This is a system generated default migratable target for a server. Do not delete manually.
+    UnixMachine:
+        Machine1:
+            NodeManager:
+                NMType: SSL
+    SecurityConfiguration:
+        NodeManagerPasswordEncrypted: '--FIX ME--'
+resources:
+    JDBCSystemResource:
+        demoPoolATP:
+            Target: Cluster1
+            JdbcResource:
+                DatasourceType: GENERIC
+                JDBCConnectionPoolParams:
+                    StatementCacheSize: 10
+                    InitialCapacity: 1
+                    MinCapacity: 1
+                    TestTableName: SQL ISVALID
+                    StatementCacheType: LRU
+                    MaxCapacity: 15
+                JDBCDataSourceParams:
+                    JNDIName: demoPoolATP
+                JDBCDriverParams:
+                    URL: 'jdbc:oracle:thin:@150.136.189.173:1521/wlsdb1'
+                    PasswordEncrypted: '--FIX ME--'
+                    DriverName: oracle.jdbc.OracleDriver
+                    Properties:
+                        user:
+                            Value: sys as sysdba
+        'rca-ds':
+            Target: Cluster1
+            JdbcResource:
+                DatasourceType: GENERIC
+                JDBCConnectionPoolParams:
+                    TestTableName: SQL ISVALID
+                JDBCDataSourceParams:
+                    JNDIName: demoPoolATP
+                JDBCDriverParams:
+                    URL: 'jdbc:oracle:thin:@//150.136.189.173:1521/wlsdb1'
+                    PasswordEncrypted: '--FIX ME--'
+                    DriverName: oracle.jdbc.OracleDriver
+                    Properties:
+                        user:
+                            Value: sys as sysdba
+appDeployments:
+    Application:
+        employee:
+            SourcePath: wlsdeploy/applications/employee.war
+            ModuleType: war
+            Target: Cluster1

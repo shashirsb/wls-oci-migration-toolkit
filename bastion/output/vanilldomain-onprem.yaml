@@ -1,0 +1,191 @@
+domainInfo:
+    AdminUserName: '--FIX ME--'
+    AdminPassword: '--FIX ME--'
+topology:
+    Name: winDomain
+    Log:
+        FileCount: 7
+        MemoryBufferSize: 10
+        DateFormatPattern: 'MMM d, yyyy h:mm:ss,SSS a z'
+        RotateLogOnStartup: true
+        FileMinSize: 500
+        DomainLogBroadcasterBufferSize: 1
+        FileName: logs/winDomain.log
+    Cluster:
+        cluster:
+            DynamicServers:
+                ServerNamePrefix: 'cluster-'
+    Server:
+        AdminServer:
+            ServerLifeCycleTimeoutVal: 30
+            UploadDirectoryName: ./servers/AdminServer/upload
+            AdministrationPort: 9002
+            VirtualMachineName: winDomain_AdminServer
+            StagingDirectoryName: /home/opc/wls/oracle_home/user_projects/domains/winDomain/servers/AdminServer/stage
+            FederationServices:
+                AssertionConsumerUri: [ 'java.lang.String[/samlacs/acs]' ]
+                AssertionRetrievalUri: [ 'java.lang.String[/samlars/ars]' ]
+                IntersiteTransferUri: [ 'java.lang.String[/samlits_ba/its', /samlits_ba/its/post, /samlits_ba/its/artifact, /samlits_cc/its, /samlits_cc/its/post, '/samlits_cc/its/artifact]' ]
+            Log:
+                FileCount: 7
+                MemoryBufferSize: 10
+                DateFormatPattern: 'MMM d, yyyy h:mm:ss,SSS a z'
+                RotateLogOnStartup: true
+                FileMinSize: 500
+                DomainLogBroadcasterBufferSize: 1
+                FileName: logs/AdminServer.log
+            ServerDiagnosticConfig:
+                WldfBuiltinSystemResourceType: None
+                DiagnosticDumpsDir: logs/diagnostic_dumps
+            SingleSignOnServices:
+                WantAssertionsSigned: true
+            TransactionLogJDBCStore:
+                PrefixName: TLOG_AdminServer_
+            WebServer:
+                WebServerLog:
+                    FileCount: 7
+                    RotateLogOnStartup: true
+                    FileMinSize: 500
+                    DateFormatPattern: 'MMM d, yyyy h:mm:ss,SSS a z'
+            WebService:
+                WebServiceReliability:
+                    NonBufferedDestination: true
+        ms1:
+            ServerLifeCycleTimeoutVal: 30
+            ListenPort: 7003
+            StagingMode: stage
+            UploadDirectoryName: ./servers/ms1/upload
+            AdministrationPort: 9002
+            VirtualMachineName: winDomain_ms1
+            StagingDirectoryName: /home/opc/wls/oracle_home/user_projects/domains/winDomain/servers/ms1/stage
+            Cluster: cluster
+            FederationServices:
+                AssertionConsumerUri: [ 'java.lang.String[/samlacs/acs]' ]
+                AssertionRetrievalUri: [ 'java.lang.String[/samlars/ars]' ]
+                IntersiteTransferUri: [ 'java.lang.String[/samlits_ba/its', /samlits_ba/its/post, /samlits_ba/its/artifact, /samlits_cc/its, /samlits_cc/its/post, '/samlits_cc/its/artifact]' ]
+            JTAMigratableTarget:
+                Cluster: cluster
+                UserPreferredServer: ms1
+            Log:
+                FileCount: 7
+                MemoryBufferSize: 10
+                DateFormatPattern: 'MMM d, yyyy h:mm:ss,SSS a z'
+                RotateLogOnStartup: true
+                FileMinSize: 500
+                DomainLogBroadcasterBufferSize: 1
+                FileName: logs/ms1.log
+            ServerDiagnosticConfig:
+                WldfBuiltinSystemResourceType: None
+                DiagnosticDumpsDir: logs/diagnostic_dumps
+            SingleSignOnServices:
+                WantAssertionsSigned: true
+            TransactionLogJDBCStore:
+                PrefixName: TLOG_ms1_
+            WebServer:
+                WebServerLog:
+                    FileCount: 7
+                    RotateLogOnStartup: true
+                    FileMinSize: 500
+                    DateFormatPattern: 'MMM d, yyyy h:mm:ss,SSS a z'
+        ms2:
+            ServerLifeCycleTimeoutVal: 30
+            ListenPort: 7004
+            StagingMode: stage
+            UploadDirectoryName: ./servers/ms2/upload
+            AdministrationPort: 9002
+            VirtualMachineName: winDomain_ms2
+            StagingDirectoryName: /home/opc/wls/oracle_home/user_projects/domains/winDomain/servers/ms2/stage
+            Cluster: cluster
+            FederationServices:
+                AssertionConsumerUri: [ 'java.lang.String[/samlacs/acs]' ]
+                AssertionRetrievalUri: [ 'java.lang.String[/samlars/ars]' ]
+                IntersiteTransferUri: [ 'java.lang.String[/samlits_ba/its', /samlits_ba/its/post, /samlits_ba/its/artifact, /samlits_cc/its, /samlits_cc/its/post, '/samlits_cc/its/artifact]' ]
+            JTAMigratableTarget:
+                Cluster: cluster
+                UserPreferredServer: ms2
+            Log:
+                FileCount: 7
+                MemoryBufferSize: 10
+                DateFormatPattern: 'MMM d, yyyy h:mm:ss,SSS a z'
+                RotateLogOnStartup: true
+                FileMinSize: 500
+                DomainLogBroadcasterBufferSize: 1
+                FileName: logs/ms2.log
+            ServerDiagnosticConfig:
+                WldfBuiltinSystemResourceType: None
+                DiagnosticDumpsDir: logs/diagnostic_dumps
+            SingleSignOnServices:
+                WantAssertionsSigned: true
+            TransactionLogJDBCStore:
+                PrefixName: TLOG_ms2_
+            WebServer:
+                WebServerLog:
+                    FileCount: 7
+                    RotateLogOnStartup: true
+                    FileMinSize: 500
+                    DateFormatPattern: 'MMM d, yyyy h:mm:ss,SSS a z'
+    MigratableTarget:
+        ms1 (migratable):
+            Notes: This is a system generated default migratable target for a server. Do not delete manually.
+            AllCandidateServers: 'ms1,ms2'
+        ms2 (migratable):
+            Notes: This is a system generated default migratable target for a server. Do not delete manually.
+            AllCandidateServers: 'ms2,ms1'
+    UnixMachine:
+        'Machine-0':
+    SecurityConfiguration:
+        NodeManagerPasswordEncrypted: '--FIX ME--'
+        CredentialEncrypted: '--FIX ME--'
+        Realm:
+            myrealm:
+                SecurityDDModel: DDOnly
+                MaxWebLogicPrincipalsInCache: 500
+                DeployableProviderSynchronizationTimeout: 60000
+                Adjudicator:
+                    DefaultAdjudicator:
+                        DefaultAdjudicator:
+                AuthenticationProvider:
+                    DefaultAuthenticator:
+                        DefaultAuthenticator:
+                            EnableGroupMembershipLookupHierarchyCaching: true
+                            GroupHierarchyCacheTTL: 60
+                            MaxGroupHierarchiesInCache: 100
+                            ControlFlag: REQUIRED
+                            GroupMembershipSearching: unlimited
+                    DefaultIdentityAsserter:
+                        DefaultIdentityAsserter:
+                            DefaultUserNameMapperAttributeType: E
+                Authorizer:
+                    XACMLAuthorizer:
+                        XACMLAuthorizer:
+                            PolicyDeploymentEnabled: true
+                CertPathProvider:
+                    WebLogicCertPathProvider:
+                        WebLogicCertPathProvider:
+                CredentialMapper:
+                    DefaultCredentialMapper:
+                        DefaultCredentialMapper:
+                PasswordValidator:
+                    SystemPasswordValidator:
+                        SystemPasswordValidator:
+                RoleMapper:
+                    XACMLRoleMapper:
+                        XACMLRoleMapper:
+resources:
+    WebAppContainer:
+        WAPEnabled: false
+        XPoweredByHeaderLevel: NONE
+        JaxRsMonitoringDefaultBehavior: true
+        ServletAuthenticationFormURL: true
+        ServletReloadCheckSecs: 1
+        MimeMappingFile: ./config/mimemappings.properties
+        ChangeSessionIDOnAuthentication: true
+        AuthCookieEnabled: true
+        WorkContextPropagationEnabled: true
+        GzipCompression:
+            GzipCompressionContentType: [ text/html, text/xml, text/plain ]
+appDeployments:
+    Application:
+        SampleWebApp:
+            ModuleType: war
+            Target: cluster

@@ -1,0 +1,63 @@
+# Copyright (c) 2018, 2020, Oracle Corporation and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pv-domain1-delete-weblogic-sample-domain-job-cm
+  namespace: pv-domain1-ns
+  labels:
+    weblogic.domainUID: pv-domain1
+    weblogic.domainName: pv-domain1
+data:
+  delete-domain-job.sh: |-
+      #!/bin/bash
+      #
+      # delete domainHome folder
+      rm -rf ${DOMAIN_HOME_DIR}
+
+      echo "Delete Completed"
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pv-domain1-delete-weblogic-sample-domain-job
+  namespace: pv-domain1-ns
+spec:
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "false"
+      labels:
+        weblogic.domainUID: pv-domain1
+        weblogic.domainName: pv-domain1
+        app: pv-domain1-delete-weblogic-sample-domain-job
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: delete-weblogic-sample-domain-job
+          image: container-registry.oracle.com/middleware/weblogic:12.2.1.4
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 7001
+          volumeMounts:
+          - mountPath: /u01/weblogic
+            name: delete-weblogic-sample-domain-job-cm-volume
+          - mountPath: /shared
+            name: weblogic-sample-domain-storage-volume
+          command: ["/bin/sh"]
+          args: ["/u01/weblogic/delete-domain-job.sh"]
+          env:
+            - name: DOMAIN_HOME_DIR
+              value: /shared/domains/pv-domain1
+            - name: DOMAIN_LOGS_DIR
+              value: /shared/logs/pv-domain1
+      volumes:
+        - name: delete-weblogic-sample-domain-job-cm-volume
+          configMap:
+            name: pv-domain1-delete-weblogic-sample-domain-job-cm
+        - name: weblogic-sample-domain-storage-volume
+          persistentVolumeClaim:
+            claimName: pv-domain1-pv-domain1-pvc
+      imagePullSecrets:
+      - name: docker-store

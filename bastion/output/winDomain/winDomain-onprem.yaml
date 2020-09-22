@@ -1,0 +1,162 @@
+domainInfo:
+    AdminUserName: '--FIX ME--'
+    AdminPassword: '--FIX ME--'
+topology:
+    Name: winDomain
+    NMProperties:
+        JavaHome: /home/opc/installer/jdk
+        LogFile: '@@DOMAIN_HOME@@/nodemanager/nodemanager.log'
+        DomainsFile: '@@DOMAIN_HOME@@/nodemanager/nodemanager.domains'
+        NodeManagerHome: '@@DOMAIN_HOME@@/nodemanager'
+        PropertiesVersion: 12.2.1.4.0
+        weblogic.StartScriptName: startManagedWebLogic.sh
+    Cluster:
+        cluster:
+    Server:
+        AdminServer:
+            CustomIdentityKeyStoreFileName: wlsdeploy/servers/AdminServer/identity.jks
+            KeyStores: DemoIdentityAndDemoTrust
+            CustomIdentityKeyStoreType: JKS
+            CustomTrustKeyStoreFileName: wlsdeploy/servers/AdminServer/trust.jks
+            CustomTrustKeyStoreType: JKS
+            CustomIdentityKeyStorePassPhraseEncrypted: '--FIX ME--'
+            CustomTrustKeyStorePassPhraseEncrypted: '--FIX ME--'
+            SSL:
+                ServerPrivateKeyPassPhraseEncrypted: '--FIX ME--'
+                ServerPrivateKeyAlias: mykey
+            ServerDiagnosticConfig:
+                WldfDiagnosticVolume: Low
+        ms1:
+            ListenPort: 7003
+            CustomIdentityKeyStoreFileName: wlsdeploy/servers/ms1/identity.jks
+            Machine: Machine
+            KeyStores: CustomIdentityAndCustomTrust
+            CustomIdentityKeyStoreType: JKS
+            CustomTrustKeyStoreFileName: wlsdeploy/servers/ms1/trust.jks
+            JavaStandardTrustKeyStorePassPhraseEncrypted: '--FIX ME--'
+            CustomTrustKeyStoreType: JKS
+            Cluster: cluster
+            CustomIdentityKeyStorePassPhraseEncrypted: '--FIX ME--'
+            CustomTrustKeyStorePassPhraseEncrypted: '--FIX ME--'
+            JTAMigratableTarget:
+                Cluster: cluster
+                UserPreferredServer: ms1
+            ServerDiagnosticConfig:
+                WldfDiagnosticVolume: Low
+        ms2:
+            ListenPort: 7004
+            Machine: Machine
+            Cluster: cluster
+            JTAMigratableTarget:
+                Cluster: cluster
+                UserPreferredServer: ms2
+    MigratableTarget:
+        ms1 (migratable):
+            Cluster: cluster
+            MigrationPolicy: manual
+            UserPreferredServer: ms1
+            Notes: This is a system generated default migratable target for a server. Do not delete manually.
+        ms2 (migratable):
+            Cluster: cluster
+            MigrationPolicy: manual
+            UserPreferredServer: ms2
+            Notes: This is a system generated default migratable target for a server. Do not delete manually.
+    UnixMachine:
+        Machine:
+            NodeManager:
+                NMType: SSL
+    SecurityConfiguration:
+        NodeManagerPasswordEncrypted: '--FIX ME--'
+        CredentialEncrypted: '--FIX ME--'
+        Realm:
+            myrealm:
+                Adjudicator:
+                    DefaultAdjudicator:
+                        DefaultAdjudicator:
+                AuthenticationProvider:
+                    DefaultAuthenticator:
+                        DefaultAuthenticator:
+                    DefaultIdentityAsserter:
+                        DefaultIdentityAsserter:
+                            ActiveType: [ AuthenticatedUser, 'weblogic-jwt-token' ]
+                Authorizer:
+                    XACMLAuthorizer:
+                        XACMLAuthorizer:
+                            PolicyDeploymentEnabled: true
+                CertPathProvider:
+                    WebLogicCertPathProvider:
+                        WebLogicCertPathProvider:
+                CredentialMapper:
+                    DefaultCredentialMapper:
+                        DefaultCredentialMapper:
+                PasswordValidator:
+                    SystemPasswordValidator:
+                        SystemPasswordValidator:
+                RoleMapper:
+                    XACMLRoleMapper:
+                        XACMLRoleMapper:
+resources:
+    JDBCSystemResource:
+        JDBC:
+            Target: cluster
+            DescriptorFileName: 'jdbc/JDBC-1995-jdbc.xml'
+            JdbcResource:
+                DatasourceType: GENERIC
+                JDBCConnectionPoolParams:
+                    TestTableName: SQL ISVALID
+                JDBCDataSourceParams:
+                    GlobalTransactionsProtocol: OnePhaseCommit
+                    JNDIName: /jndi
+                JDBCDriverParams:
+                    URL: 'jdbc:oracle:thin:@//129.146.54.89:1521/DB0212_phx17c.sub02040651250.vcnpublicintern.oraclevcn.com'
+                    PasswordEncrypted: '--FIX ME--'
+                    DriverName: oracle.jdbc.OracleDriver
+                    Properties:
+                        user:
+                            Value: system
+        test:
+            Target: cluster
+            DescriptorFileName: 'jdbc/test-jdbc.xml'
+            JdbcResource:
+                DatasourceType: GENERIC
+                JDBCConnectionPoolParams:
+                    StatementCacheSize: 10
+                    InitialCapacity: 1
+                    MinCapacity: 1
+                    TestTableName: SQL ISVALID
+                    StatementCacheType: LRU
+                    MaxCapacity: 15
+                JDBCDataSourceParams:
+                    StreamChunkSize: 256
+                    GlobalTransactionsProtocol: OnePhaseCommit
+                    JNDIName: test
+                JDBCDriverParams:
+                    URL: 'jdbc:oracle:thin:@cnbankdb_high?TNS_ADMIN=/home/opc/Wallet_cnbankdb'
+                    PasswordEncrypted: '--FIX ME--'
+                    DriverName: oracle.jdbc.OracleDriver
+                    Properties:
+                        user:
+                            Value: admin
+appDeployments:
+    Library:
+        'jax-rs#2.0@2.22.4.0':
+            SourcePath: '@@WL_HOME@@/common/deployable-libraries/jax-rs-2.0.war'
+            ModuleType: war
+            Target: cluster
+    Application:
+        SampleWebApp:
+            SourcePath: '@@ORACLE_HOME@@/user_projects/applications/winDomain/SampleWebApp.war'
+            ModuleType: war
+            Target: cluster
+        'simple-app':
+            SourcePath: 'wlsdeploy/applications/simple-app.war'
+            ModuleType: war
+            Target: cluster
+        webapp:
+            SourcePath: wlsdeploy/applications/webapp.war
+            ModuleType: war
+            Target: ms2
+        customerservice:
+            SourcePath: wlsdeploy/applications/customerservice.war
+            ModuleType: war
+            Target: cluster

@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: traefik-soa-route
+  namespace: sample-soa-domain-ns
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  - host:
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: soainfra-cluster-soa-cluster
+          servicePort: 8001
+      - path: /console
+        backend:
+          serviceName: soainfra-adminserver
+          servicePort: 7001
+      - path: /em
+        backend:
+          serviceName: soainfra-adminserver
+          servicePort: 7001
+      - path: /soa-infra
+        backend:
+          serviceName: soainfra-soa-server1
+          servicePort: 8001

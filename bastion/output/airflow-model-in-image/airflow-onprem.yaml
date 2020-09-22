@@ -1,0 +1,52 @@
+domainInfo:
+    AdminUserName: '@@SECRET:airflow-weblogic-credentials:username@@'
+    AdminPassword: '@@SECRET:airflow-weblogic-credentials:password@@'
+topology:
+    Name: airflow
+    AdminServerName: "admin-server"
+    Cluster:
+      "cluster-1":
+        DynamicServers:
+          ServerTemplate:  "cluster-1-template"
+          ServerNamePrefix: "managed-server"
+          DynamicClusterSize: '@@PROP:CLUSTER_SIZE@@'
+          MaxDynamicClusterSize: '@@PROP:CLUSTER_SIZE@@'
+          CalculatedListenPorts: false
+    Server:
+      "admin-server":
+        ListenPort: 7001
+    ServerTemplate:
+      "cluster-1-template":
+        Cluster: "cluster-1"
+        ListenPort: 8001
+resources:
+    JDBCSystemResource:
+        demoPoolATP:
+            Target: 'cluster-1'
+            DescriptorFileName: 'jdbc/demoPoolATP-3342-jdbc.xml'
+            JdbcResource:
+                DatasourceType: GENERIC
+                JDBCConnectionPoolParams:
+                    StatementCacheSize: 10
+                    InitialCapacity: 1
+                    MinCapacity: 1
+                    TestTableName: SQL ISVALID
+                    StatementCacheType: LRU
+                    MaxCapacity: 15
+                JDBCDataSourceParams:
+                    GlobalTransactionsProtocol: OnePhaseCommit
+                    JNDIName: demoPoolATP
+                JDBCDriverParams:
+                    URL: 'jdbc:oracle:thin:@150.136.189.173:1521/wlsdb1'
+                    PasswordEncrypted: '@@PROP:DB_PASSWORD@@'
+                    DriverName: oracle.jdbc.OracleDriver
+                    Properties:
+                        user:
+                            Value: sys as sysdba
+appDeployments:
+    Application:
+        employee:
+            SourcePath: wlsdeploy/applications/employee.war
+            ModuleType: war
+            Target: 'cluster-1'
+            StagingMode: stage

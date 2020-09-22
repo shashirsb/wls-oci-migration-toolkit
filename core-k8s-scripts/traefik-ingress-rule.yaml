@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: traefik-route-$NS_NAME-1
+  namespace: $NS_NAME-ns
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  - host:
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: $NS_NAME-cluster-cluster-1
+          servicePort: 8001
+      - path: /console
+        backend:
+          serviceName: $NS_NAME-admin-server
+          servicePort: 7001
