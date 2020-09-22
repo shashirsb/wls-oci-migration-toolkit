@@ -3,7 +3,7 @@ Migration Tool Kit for migrating on-prem workloads to OCI
 
 Please follow the steps in the same order ( step 1-3 should be on the same machine)
 
- 1. Download weblogic-deploy.zip from https://github.com/oracle/weblogic-deploy-tooling/releases/tag/release-1.9.5 
+ 1. Download weblogic-deploy.zip from https://github.com/oracle/weblogic-deploy-tooling/releases/latest
 
  2. Download JDK from https://www.oracle.com/in/java/technologies/javase/javase-jdk8-downloads.html
 
