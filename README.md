@@ -9,7 +9,7 @@ Please follow the steps in the same order
 
  3. git clone https://github.com/shashirsb/wls-oci-migration-toolkit.git under user home, e.g. /home/opc
 
- 4. After cloninig run "cd wls-oci-migration-toolkit; ./setup.sh"
+ 4. After cloninig run "cd wls-oci-migration-toolkit; ./setup.sh" and follow the instructions
 
  5. Edit "wls-oci-migration-toolkit/core-k8s-scripts/env.sh" to add docker registry and oracle container registry login credentials
 
