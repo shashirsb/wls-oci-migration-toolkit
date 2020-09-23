@@ -22,5 +22,5 @@ What it can do:
 2. Create docker image with custom domain
 3. Automate Updating on-prem domain resource to OKE - online
 4. Automate process of discovering on-prem domain and converting into WDT files
-5. others work in progress
+5. Other options coming soon...
 
