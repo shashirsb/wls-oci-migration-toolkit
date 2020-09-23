@@ -7,7 +7,7 @@ Please follow the steps in the same order
 
  2. Download JDK from https://www.oracle.com/in/java/technologies/javase/javase-jdk8-downloads.html
 
- 3. git clone https://github.com/shashirsb/wls-oci-migration-toolkit.git
+ 3. git clone https://github.com/shashirsb/wls-oci-migration-toolkit.git under user home, e.g. /home/opc
 
  4. After cloninig run "cd wls-oci-migration-toolkit; ./setup.sh"
 
