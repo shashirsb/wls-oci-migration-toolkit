@@ -5,7 +5,7 @@ Please follow the steps in the same order
 
  1. Download weblogic-deploy.zip from https://github.com/oracle/weblogic-deploy-tooling/releases/latest
 
- 2. Download JRE from https://www.oracle.com/java/technologies/javase-jre8-downloads.html
+ 2. Download JRE from https://www.oracle.com/java/technologies/javase-jre8-downloads.html (*.tar.gz version)
 
  3. git clone https://github.com/shashirsb/wls-oci-migration-toolkit.git under user home, e.g. /home/opc
 
