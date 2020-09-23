@@ -1,0 +1,34 @@
+
+Please create on prem datasource with below details
+==================================================================
+
+Name: demoPoolATP
+JNDI: demoPoolATP
+
+For employee.war file to work DataSource should have above details
+
+===================================================================
+
+Example: 
+
+JDBCSystemResource:
+        demoPoolATP:
+            Target: Cluster1
+            JdbcResource:
+                DatasourceType: GENERIC
+                JDBCConnectionPoolParams:
+                    StatementCacheSize: 10
+                    InitialCapacity: 1
+                    MinCapacity: 1
+                    TestTableName: SQL ISVALID
+                    StatementCacheType: LRU
+                    MaxCapacity: 15
+                JDBCDataSourceParams:
+                    JNDIName: demoPoolATP
+                JDBCDriverParams:
+                    URL: 'jdbc:oracle:thin:@150.136.189.173:1521/wlsdb1'
+                    PasswordEncrypted: '--FIX ME--'
+                    DriverName: oracle.jdbc.OracleDriver
+                    Properties:
+                        user:
+                            Value: sys as sysdba
