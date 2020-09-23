@@ -42,6 +42,16 @@ echo "ssh details"
 echo $REMOTE_USER@$REMOTE_IP
 echo ""
 echo ""
+echo ""
+echo ""
+echo " If you want to run the discovery tool manually please follow the below instruction"
+echo ""
+echo "1. Download weblogic-deploy.zip tool and unzip the file , reference: https://github.com/oracle/weblogic-deploy-tooling/releases/latest"
+echo "2. Set JAVA_HOME"
+echo "3. Run the command : ~/weblogic-deploy/bin/discoverDomain.sh -oracle_home $ORACLE_HOME -domain_home $DOMAIN_HOME/$DOMAIN_NAME -archive_file $BASTION_HOME/output/$DOMAIN_NAME/$DOMAIN_NAME-onprem.zip -model_file $BASTION_HOME/output/$DOMAIN_NAME/$DOMAIN_NAME-onprem.yaml"
+echo "4. Copy the folder with the name $DOMAIN_NAME containing $DOMAIN_NAME-onprem.zip $DOMAIN_NAME-onprem.yaml $DOMAIN_NAME-onprem.properties from on-prem server/VM into $HOME/wls-oci-migration-toolkit/bastion/output/"
+echo ""
+echo ""
 
 BASTION_HOME=/home/$REMOTE_USER/bastion
 JAVA_HOME=$BASTION_HOME/jdk
