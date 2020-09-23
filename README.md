@@ -1,7 +1,7 @@
 # wls-oci-migration-toolkit
 Migration Tool Kit for migrating on-prem workloads to OCI 
 
-Please follow the steps in the same order ( step 1-3 should be on the same machine)
+Please follow the steps in the same order
 
  1. Download weblogic-deploy.zip from https://github.com/oracle/weblogic-deploy-tooling/releases/latest
 
