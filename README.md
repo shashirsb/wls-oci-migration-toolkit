@@ -1,7 +1,7 @@
 # wls-oci-migration-toolkit
 Migration Tool Kit for migrating on-prem workloads to OCI 
 
-Pre-requisites: Install OCI CLI, Helm, Docker, python3, kubectl.
+                Pre-requisites: Install OCI CLI, Helm, Docker, python3, kubectl.
                 NOTE: If you are using OCI CloudShell all the required software are pre-installed.
 
 Please follow the steps in the same order
