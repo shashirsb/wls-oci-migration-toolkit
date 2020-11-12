@@ -2,8 +2,8 @@ echo "Install Helm:"
 echo "============="
 echo " "
 echo " "
-wget https://get.helm.sh/helm-v3.0.3-linux-amd64.tar.gz
-tar -zxvf helm-v3.0.3-linux-amd64.tar.gz
+wget https://get.helm.sh/helm-v3.1.0-linux-amd64.tar.gz
+tar -zxvf helm-v3.1.0-linux-amd64.tar.gz
 sudo mv linux-amd64/helm /usr/local/bin/helm
 echo ""
 echo ""
