@@ -1,6 +1,8 @@
 #!/bin/bash
 echo "alias migtool='cd $HOME/wls-oci-migration-toolkit;./wls-migrate.sh'" >> ~/.bashrc
 
+source  ~/.bashrc
+
 read -p "Enter fullpath of  weblogic-deploy.zip. e.g., /home/opc/weblogic-deploy.zip : " wdtzip
 
 read -p "Enter fullpath of jdk  e.g., /home/opc/jdk-8u261-linux-i586.tar.gz : " jdkzip
